@@ -5,7 +5,7 @@ import Game from "./components/Game";
 function App() {
   return (
     <div>
-      <header className="text-center">
+      <header className="text-center mb-4">
         <h1>Nonogram</h1>
       </header>
       <GameProvider>

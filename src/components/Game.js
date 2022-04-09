@@ -18,6 +18,38 @@ const Game = () => {
     );
   }, [generateBoard]);
 
+  const colGroups = (
+    <div className="grid grid-flow-col col-[2_/_-1] justify-start items-start">
+      {cols.map((set) =>
+        set.map((group, i) => (
+          <div
+            className={`${
+              group.allTilesOpened ? "text-slate-600 " : ""
+            }px-[1.7rem]`}
+            key={i}
+          >
+            {group.count}
+          </div>
+        ))
+      )}
+    </div>
+  );
+
+  const rowGroups = (
+    <div className="grid justify-end items-center">
+      {rows.map((set) =>
+        set.map((group, i) => (
+          <div
+            className={`${group.allTilesOpened ? "text-slate-600 " : ""}`}
+            key={i}
+          >
+            {group.count}
+          </div>
+        ))
+      )}
+    </div>
+  );
+
   const board = grid.length
     ? grid.map((row, rowIndex) => (
         <tr key={rowIndex}>
@@ -48,9 +80,15 @@ const Game = () => {
     : null;
 
   return (
-    <table className="table-fixed border-collapse border border-slate-400 mx-auto mt-4">
-      <tbody>{board}</tbody>
-    </table>
+    <div className="grid grid-cols-2 gap-5 text-lg">
+      {colGroups}
+      {rowGroups}
+      <div className="grid justify-start">
+        <table className="table-fixed border-collapse border border-slate-400 mx-auto">
+          <tbody>{board}</tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 
