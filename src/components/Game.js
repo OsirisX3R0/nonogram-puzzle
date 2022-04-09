@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { TileStateEnum } from "nonogram-maker";
 
 import { GameContext } from "../context/GameContext";
+import Emoji from "./Emoji";
 
 const Game = () => {
   const { generateBoard, grid, lives, rows, cols, openTiles } =
@@ -87,6 +88,9 @@ const Game = () => {
         <table className="table-fixed border-collapse border border-slate-400 mx-auto">
           <tbody>{board}</tbody>
         </table>
+      </div>
+      <div className="grid grid-flow-col col-[2_/_-1] justify-start">
+        <Emoji symbol="❤️" label="heart" /> x {lives}
       </div>
     </div>
   );

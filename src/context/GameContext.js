@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useRef, useState } from "react";
 import { Board } from "nonogram-maker";
 
 export const GameContext = createContext();
