@@ -19,81 +19,77 @@ const Game = () => {
     );
   }, [generateBoard]);
 
-  const colGroups = (
-    <div className="grid grid-flow-col col-[2_/_-1] justify-start items-start">
-      {cols.map((set) =>
-        set.map((group, i) => (
-          <div
-            className={`${
-              group.allTilesOpened ? "text-slate-600 " : ""
-            }px-[1.7rem]`}
-            key={i}
-          >
-            {group.count}
-          </div>
-        ))
-      )}
-    </div>
-  );
+  const board = grid.length ? (
+    <table className="table-fixed mx-auto">
+      <thead>
+        <th className="min-h-[4rem]"></th>
+        {cols.map((set, setI) =>
+          set.map((group, groupI) => (
+            <th
+              className={`${
+                group.allTilesOpened ? "text-slate-600 " : ""
+              } min-h-[4rem]`}
+              key={`${setI}-${groupI}`}
+            >
+              {group.count}
+            </th>
+          ))
+        )}
+      </thead>
+      <tbody>
+        {grid.map((row, rowIndex) => {
+          return (
+            <tr key={rowIndex}>
+              <th className="min-w-[4rem]">
+                {rows[rowIndex].map((group, i) => (
+                  <span
+                    className={`${
+                      group.allTilesOpened ? "text-slate-600 " : ""
+                    }`}
+                    key={`${rowIndex}-${i}`}
+                  >
+                    {group.count}
+                  </span>
+                ))}
+              </th>
+              {row.map((tile, tileIndex) => {
+                let tileClass =
+                  tile.state === TileStateEnum.OPEN
+                    ? "bg-neutral-300"
+                    : tile.flagged
+                    ? tile.state === TileStateEnum.WRONG
+                      ? "text-red-600"
+                      : "text-neutral-100"
+                    : "";
 
-  const rowGroups = (
-    <div className="grid justify-end items-center">
-      {rows.map((set) =>
-        set.map((group, i) => (
-          <div
-            className={`${group.allTilesOpened ? "text-slate-600 " : ""}`}
-            key={i}
-          >
-            {group.count}
-          </div>
-        ))
-      )}
-    </div>
-  );
+                let tileContent = tile.flagged ? "X" : "";
 
-  const board = grid.length
-    ? grid.map((row, rowIndex) => (
-        <tr key={rowIndex}>
-          {row.map((tile, tileIndex) => {
-            let tileClass =
-              tile.state === TileStateEnum.OPEN
-                ? "bg-neutral-800"
-                : tile.flagged
-                ? tile.state === TileStateEnum.WRONG
-                  ? "text-red-600"
-                  : "text-neutral-100"
-                : "";
-
-            let tileContent = tile.flagged ? "X" : "";
-
-            return (
-              <td
-                className={`${tileClass} border border-slate-400 text-center w-16 h-16`}
-                key={`${rowIndex}-${tileIndex}`}
-                onClick={() => openTiles([tile])}
-              >
-                {tileContent}
-              </td>
-            );
-          })}
+                return (
+                  <td
+                    className={`${tileClass} border border-slate-400 text-center w-16 h-16`}
+                    key={`${rowIndex}-${tileIndex}`}
+                    onClick={() => openTiles([tile])}
+                  >
+                    {tileContent}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+      <tfoot className="text-right">
+        <tr>
+          <td colSpan={cols.length + 1}>
+            <Emoji symbol="❤️" label="heart" />
+            {lives}
+          </td>
         </tr>
-      ))
-    : null;
+      </tfoot>
+    </table>
+  ) : null;
 
-  return (
-    <div className="grid grid-cols-2 gap-5 text-lg">
-      {colGroups}
-      {rowGroups}
-      <div className="grid justify-start">
-        <table className="table-fixed border-collapse border border-slate-400 mx-auto">
-          <tbody>{board}</tbody>
-        </table>
-      </div>
-      <div className="grid grid-flow-col col-[2_/_-1] justify-start">
-        <Emoji symbol="❤️" label="heart" /> x {lives}
-      </div>
-    </div>
-  );
+  return board;
 };
 
 export default Game;

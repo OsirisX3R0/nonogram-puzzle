@@ -12,7 +12,6 @@ export const GameProvider = ({ children }) => {
   const [cols, setCols] = useState([]);
 
   const updateState = useCallback(() => {
-    console.log(board.current.grid[0][0]);
     setGrid(board.current.grid);
     setBoardState(board.current.state);
     setLives(board.current.lives);
