@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useCallback, useEffect, useRef, useState } from "react";
 import { Board } from "nonogram-maker";
 
 export const GameContext = createContext();
@@ -8,29 +8,54 @@ export const GameProvider = ({ children }) => {
   const [grid, setGrid] = useState([]);
   const [boardState, setBoardState] = useState(0);
   const [lives, setLives] = useState(0);
+  const [rows, setRows] = useState([]);
+  const [cols, setCols] = useState([]);
 
-  useEffect(() => {
+  const updateState = useCallback(() => {
     console.log(board.current.grid[0][0]);
     setGrid(board.current.grid);
     setBoardState(board.current.state);
     setLives(board.current.lives);
-  }, [board]);
+    setRows(board.current.rows);
+    setCols(board.current.cols);
+  }, []);
 
-  const generateBoard = (grid, opts) => {
-    board.current = new Board(grid, opts);
-  };
+  const generateBoard = useCallback(
+    (grid, opts) => {
+      board.current = new Board(grid, opts);
+      updateState();
+    },
+    [updateState]
+  );
 
-  const openTiles = (tiles) => {
-    board.toggleOpenMany(tiles);
-  };
+  const openTiles = useCallback(
+    (tiles) => {
+      board.current.toggleOpenMany(tiles);
+      updateState();
+    },
+    [updateState]
+  );
 
-  const flagTiles = (tiles) => {
-    board.toggleFlagMany(tiles);
-  };
+  const flagTiles = useCallback(
+    (tiles) => {
+      board.current.toggleFlagMany(tiles);
+      updateState();
+    },
+    [updateState]
+  );
 
   return (
     <GameContext.Provider
-      value={{ grid, boardState, lives, generateBoard, openTiles, flagTiles }}
+      value={{
+        grid,
+        boardState,
+        lives,
+        rows,
+        cols,
+        generateBoard,
+        openTiles,
+        flagTiles,
+      }}
     >
       {children}
     </GameContext.Provider>
