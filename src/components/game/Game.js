@@ -5,7 +5,7 @@ import { GameContext } from "../../context/GameContext";
 import Emoji from "../core/Emoji";
 
 const Game = () => {
-  const { generateBoard, grid, lives, rows, cols, openTiles } =
+  const { generateBoard, grid, lives, rows, cols, openTiles, flagTiles } =
     useContext(GameContext);
 
   useEffect(() => {
@@ -25,6 +25,11 @@ const Game = () => {
       { lives: 9 }
     );
   }, [generateBoard]);
+
+  const onContextMenu = (e, tiles) => {
+    e.preventDefault();
+    flagTiles(tiles);
+  };
 
   const board = grid.length ? (
     <table className="table-fixed mx-auto">
@@ -80,6 +85,7 @@ const Game = () => {
                     className={`${tileClass} border border-slate-400 text-center w-16 h-16`}
                     key={`${rowIndex}-${tileIndex}`}
                     onClick={() => openTiles([tile])}
+                    onContextMenu={(e) => onContextMenu(e, [tile])}
                   >
                     {tileContent}
                   </td>
