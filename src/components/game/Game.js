@@ -1,8 +1,8 @@
 import { useContext, useEffect } from "react";
 import { TileStateEnum } from "nonogram-maker";
 
-import { GameContext } from "../context/GameContext";
-import Emoji from "./Emoji";
+import { GameContext } from "../../context/GameContext";
+import Emoji from "../core/Emoji";
 
 const Game = () => {
   const { generateBoard, grid, lives, rows, cols, openTiles } =
@@ -11,9 +11,16 @@ const Game = () => {
   useEffect(() => {
     generateBoard(
       [
-        [1, 1, 1],
-        [0, 1, 0],
-        [0, 1, 0],
+        [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
+        [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 0, 0, 0, 0, 0, 1, 0],
+        [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+        [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+        [0, 1, 0, 0, 1, 1, 0, 0, 1, 0],
+        [0, 0, 1, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1, 1, 1, 0, 0, 0],
       ],
       { lives: 9 }
     );
@@ -22,30 +29,34 @@ const Game = () => {
   const board = grid.length ? (
     <table className="table-fixed mx-auto">
       <thead>
-        <th className="min-h-[4rem]"></th>
-        {cols.map((set, setI) =>
-          set.map((group, groupI) => (
-            <th
-              className={`${
-                group.allTilesOpened ? "text-slate-600 " : ""
-              } min-h-[4rem]`}
-              key={`${setI}-${groupI}`}
-            >
-              {group.count}
+        <tr>
+          <th className="min-h-[4rem]"></th>
+          {cols.map((set, setI) => (
+            <th className="align-bottom min-h-[4rem]" key={setI}>
+              {set.map((group, groupI) => (
+                <div
+                  className={`${
+                    group.allTilesOpened ? "text-slate-600" : ""
+                  } mb-4`}
+                  key={`${setI}-${groupI}`}
+                >
+                  {group.count}
+                </div>
+              ))}
             </th>
-          ))
-        )}
+          ))}
+        </tr>
       </thead>
       <tbody>
         {grid.map((row, rowIndex) => {
           return (
             <tr key={rowIndex}>
-              <th className="min-w-[4rem]">
+              <th className="min-w-[4rem] text-right">
                 {rows[rowIndex].map((group, i) => (
                   <span
                     className={`${
                       group.allTilesOpened ? "text-slate-600 " : ""
-                    }`}
+                    } inline-block mr-4`}
                     key={`${rowIndex}-${i}`}
                   >
                     {group.count}
@@ -81,8 +92,7 @@ const Game = () => {
       <tfoot className="text-right">
         <tr>
           <td colSpan={cols.length + 1}>
-            <Emoji symbol="❤️" label="heart" />
-            {lives}
+            <Emoji symbol="❤️" label="heart" /> x {lives}
           </td>
         </tr>
       </tfoot>
