@@ -12,11 +12,11 @@ export const GameProvider = ({ children }) => {
   const [cols, setCols] = useState([]);
 
   const updateState = useCallback(() => {
-    setGrid(board.current.grid);
+    setGrid([...board.current.grid]);
     setBoardState(board.current.state);
     setLives(board.current.lives);
-    setRows(board.current.rows);
-    setCols(board.current.cols);
+    setRows([...board.current.rows]);
+    setCols([...board.current.cols]);
   }, []);
 
   const generateBoard = useCallback(
@@ -39,6 +39,9 @@ export const GameProvider = ({ children }) => {
     (tiles) => {
       board.current.toggleFlagMany(tiles);
       updateState();
+      for (let tile of tiles) {
+        console.log(tile);
+      }
     },
     [updateState]
   );
