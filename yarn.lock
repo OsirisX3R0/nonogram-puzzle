@@ -6427,10 +6427,10 @@ node-releases@^2.0.2:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz#7139fe71e2f4f11b47d4d2986aaf8c48699e0c01"
   integrity sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==
 
-nonogram-maker@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/nonogram-maker/-/nonogram-maker-1.0.0.tgz#031dd9cdf65475e19365b758ca394e9948a1728b"
-  integrity sha512-jgkSvbxwhIqXaAvLh/V+lAM2AgKK8e6BEbVjR1bV6vh/AvHz8br/9Y/utcDu1aQJKagsJX4gmORYQioL6kTF+g==
+nonogram-maker@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/nonogram-maker/-/nonogram-maker-1.0.1.tgz#6e4953a95863f248dcd93c41e99ffc9ce4dbd5e8"
+  integrity sha512-HwIZY1rLwUoGyycL2RRMBQ4cHFaHsA10LATSby8cxohf0ArWfYtBPDpblEcV8mGsjv+wFzsZQuY59ac29AYkBw==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
